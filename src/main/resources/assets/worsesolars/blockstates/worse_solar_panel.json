@@ -1,0 +1,16 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"status": {
+			"0": {
+				"model": "worsesolars:worse_solar_panel_inactive"
+			},
+			"1": {
+				"model": "worsesolars:worse_solar_panel_active"
+			},
+			"2": {
+				"model": "worsesolars:worse_solar_panel_decayed"
+			}
+		}
+	}
+}

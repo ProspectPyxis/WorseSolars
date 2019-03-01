@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GGG",
+		"INI",
+		"CCC"
+	],
+	"key": {
+		"G": [{
+			"type": "forge:ore_dict",
+			"ore": "blockGlass"
+		}],
+		"I": [{
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		}],
+		"N": [{
+			"type": "forge:ore_dict",
+			"ore": "nuggetGold"
+		}],
+		"C": [{
+			"type": "forge:ore_dict",
+			"ore": "cobblestone"
+		}]
+	},
+	"result": {
+		"item": "worsesolars:worse_solar_panel",
+		"data": 0
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"solar.shortout": {
+		"category": "block",
+		"subtitle": "worsesolars.subtitles.shortout",
+		"sounds": [
+			"worsesolars:shortout"
+		]
+	}
+}

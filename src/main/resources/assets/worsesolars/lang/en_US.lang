@@ -1,0 +1,9 @@
+tile.worse_solar_panel.name=Cheap Solar Panel
+
+worsesolars.subtitles.shortout=Solar Panel Short Out
+
+tooltip.worse_solar_panel.normal=This doesn't look very stable.
+tooltip.worse_solar_panel.timeleft.normal=Breaks down in %1$s minutes of use.
+tooltip.worse_solar_panel.timeleft.onemin=Breaks down in 1 minute of use.
+tooltip.worse_solar_panel.timeleft.zeromin=Breaks down in less than one minute of use.
+tooltip.worse_solar_panel.decayed=It's completely broken.
