@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import prospectpyxis.worsesolars.proxy.CommonProxy;
 import prospectpyxis.worsesolars.registry.BlockRegisterer;
+import prospectpyxis.worsesolars.registry.ItemRegisterer;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;
 
 @Mod(modid = WorseSolars.modid, name = WorseSolars.name, version = WorseSolars.version)
@@ -20,7 +21,7 @@ public class WorseSolars {
 
     public static final String modid = "worsesolars";
     public static final String name = "Worse Solars";
-    public static final String version = "1.0";
+    public static final String version = "1.1";
 
     @Mod.Instance(modid)
     public static WorseSolars instance;
@@ -48,6 +49,7 @@ public class WorseSolars {
 
         @SubscribeEvent
         public static void registerItems(RegistryEvent.Register<Item> event) {
+            ItemRegisterer.register(event.getRegistry());
             BlockRegisterer.registerItemBlocks(event.getRegistry());
         }
 
@@ -63,6 +65,7 @@ public class WorseSolars {
 
         @SubscribeEvent
         public static void registerModels(ModelRegistryEvent event) {
+            ItemRegisterer.registerModels();
             BlockRegisterer.registerModels();
         }
     }

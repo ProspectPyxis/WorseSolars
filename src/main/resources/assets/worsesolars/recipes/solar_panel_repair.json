@@ -1,21 +1,24 @@
 {
+	"conditions": [{
+		"type": "worsesolars:enable_repairs",
+		"value": true
+	}],
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
 		"SSS",
-		"IRI",
-		"III"
+		"RPR"
 	],
 	"key": {
 		"S": [{
 			"item": "worsesolars:solar_cell"
 		}],
-		"I": [{
-			"type": "forge:ore_dict",
-			"ore": "ingotIron"
-		}],
 		"R": [{
 			"type": "forge:ore_dict",
 			"ore": "dustRedstone"
+		}],
+		"P": [{
+			"item": "worsesolars:worse_solar_panel",
+			"data": 2
 		}]
 	},
 	"result": {

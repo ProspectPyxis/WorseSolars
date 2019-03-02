@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GGG",
+		"LLL",
+		"III"
+	],
+	"key": {
+		"G": [{
+			"type": "forge:ore_dict",
+			"ore": "paneGlassColorless"
+		}],
+		"L": [{
+			"item": "minecraft:dye",
+			"data": 4
+		}],
+		"I": [{
+			"type": "forge:ore_dict",
+			"ore": "nuggetIron"
+		}]
+	},
+	"result": {
+		"item": "worsesolars:solar_cell"
+	}
+}

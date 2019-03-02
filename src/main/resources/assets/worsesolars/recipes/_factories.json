@@ -1,0 +1,5 @@
+{
+	"conditions": {
+		"enable_repairs": "prospectpyxis.worsesolars.recipe.RepairConditionFactory"
+	}
+}

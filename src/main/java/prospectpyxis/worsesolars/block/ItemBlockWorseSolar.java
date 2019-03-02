@@ -7,6 +7,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import prospectpyxis.worsesolars.ModConfig;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -23,6 +24,9 @@ public class ItemBlockWorseSolar extends ItemBlock {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         if (stack.getMetadata() == 2) {
             tooltip.add(I18n.format("tooltip.worse_solar_panel.decayed"));
+            if (ModConfig.blockProperties.canRepair) {
+                tooltip.add(I18n.format("tooltip.worse_solar_panel.decayed.canrepair"));
+            }
         }
 
         if (stack.getMetadata() == 0) {

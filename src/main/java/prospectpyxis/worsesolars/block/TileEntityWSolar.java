@@ -6,8 +6,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import prospectpyxis.worsesolars.ModConfig;
 import prospectpyxis.worsesolars.core.EnergyBase;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;
 
@@ -16,10 +18,10 @@ import javax.annotation.Nullable;
 public class TileEntityWSolar extends TileEntity implements ITickable {
 
     private boolean canProducePower;
-    private int decayTimer = 24000;
+    private int decayTimer = ModConfig.blockProperties.panelDurability;
     private boolean hasDecayed = false;
 
-    public EnergyBase eContainer = new EnergyBase(40000, 40);
+    public EnergyBase eContainer = new EnergyBase(ModConfig.blockProperties.energyCapacity, ModConfig.blockProperties.transferRate);
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -43,7 +45,8 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
     public void update() {
         if (!world.isRemote) {
             if (world.getTotalWorldTime() % 20 == 0) {
-                canProducePower = world.canBlockSeeSky(pos.up()) && !world.isRaining() && !world.isThundering() && world.isDaytime();
+                canProducePower = (world.canBlockSeeSky(pos.up())  && world.isDaytime())
+                        && ((!world.isRaining() && !world.isThundering()) || !world.getBiome(pos).canRain());
             }
 
             if (world.getTileEntity(pos) instanceof TileEntityWSolar) {
@@ -63,9 +66,14 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
                 world.playSound(null, pos, SoundRegisterer.shortout, SoundCategory.BLOCKS, 1f, 1f);
             }
 
-            if (!hasDecayed && canProducePower) {
-                eContainer.obtainEnergy(2);
-                decrementDecay();
+            if (!hasDecayed) {
+                if (canProducePower) {
+                    eContainer.obtainEnergy(ModConfig.blockProperties.FEpertick);
+                    decrementDecay();
+                }
+                else if (ModConfig.blockProperties.panelConstantDrain) {
+                    decrementDecay();
+                }
             }
         }
     }
