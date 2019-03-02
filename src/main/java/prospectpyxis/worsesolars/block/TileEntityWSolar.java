@@ -20,6 +20,7 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
     private boolean canProducePower;
     private int decayTimer = ModConfig.blockProperties.panelDurability;
     private boolean hasDecayed = false;
+    private boolean alreadyUpdated = false;
 
     public EnergyBase eContainer = new EnergyBase(ModConfig.blockProperties.energyCapacity, ModConfig.blockProperties.transferRate);
 
@@ -45,6 +46,7 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
     public void update() {
         if (!world.isRemote) {
             if (world.getTotalWorldTime() % 20 == 0) {
+                if (!alreadyUpdated) alreadyUpdated = true;
                 canProducePower = (world.canBlockSeeSky(pos.up())  && world.isDaytime())
                         && ((!world.isRaining() && !world.isThundering()) || !world.getBiome(pos).canRain());
             }
@@ -66,7 +68,7 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
                 world.playSound(null, pos, SoundRegisterer.shortout, SoundCategory.BLOCKS, 1f, 1f);
             }
 
-            if (!hasDecayed) {
+            if (!hasDecayed && alreadyUpdated) {
                 if (canProducePower) {
                     eContainer.obtainEnergy(ModConfig.blockProperties.FEpertick);
                     decrementDecay();
