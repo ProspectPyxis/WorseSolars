@@ -3,6 +3,6 @@
 	"textures": {
 		"bottom": "worsesolars:blocks/solar_panel_bottom",
 		"side": "worsesolars:blocks/solar_panel_side",
-		"top": "worsesolars:blocks/worse_solar_panel_top_active"
+		"top": "worsesolars:blocks/infinite_solar_panel_top_active"
 	}
 }

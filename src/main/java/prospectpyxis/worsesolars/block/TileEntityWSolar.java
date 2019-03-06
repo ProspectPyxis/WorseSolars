@@ -6,7 +6,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import prospectpyxis.worsesolars.ModConfig;
@@ -47,16 +46,19 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
         if (!world.isRemote) {
             if (world.getTotalWorldTime() % 20 == 0) {
                 if (!alreadyUpdated) alreadyUpdated = true;
-                canProducePower = (world.canBlockSeeSky(pos.up())  && world.isDaytime())
-                        && ((!world.isRaining() && !world.isThundering()) || !world.getBiome(pos).canRain());
+                if (!hasDecayed) {
+                    canProducePower = (world.canBlockSeeSky(pos.up()) && world.isDaytime())
+                            && ((!world.isRaining() && !world.isThundering()) || !world.getBiome(pos).canRain());
+                    world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
+                }
             }
 
             if (world.getTileEntity(pos) instanceof TileEntityWSolar) {
                 if (!hasDecayed) {
                     if (canProducePower) {
-                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockWorseSolar.STATUS, 1), 3);
+                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInfiniteSolar.STATUS, 1), 3);
                     } else {
-                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockWorseSolar.STATUS, 0), 3);
+                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInfiniteSolar.STATUS, 0), 3);
                     }
                 } else {
                     world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockWorseSolar.STATUS, 2), 3);
@@ -66,6 +68,7 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
             if (decayTimer <= 0 && !hasDecayed) {
                 hasDecayed = true;
                 world.playSound(null, pos, SoundRegisterer.shortout, SoundCategory.BLOCKS, 1f, 1f);
+                world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
             }
 
             if (!hasDecayed && alreadyUpdated) {
@@ -106,5 +109,18 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
     public void decrementDecay() {
         decayTimer--;
         markDirty();
+    }
+
+    public int getComparatorOutput() {
+        if (!ModConfig.blockProperties.canComparatorOutput) return 0;
+        if (hasDecayed) {
+            return 0;
+        }
+        else if (canProducePower) {
+            return 2;
+        }
+        else {
+            return 1;
+        }
     }
 }

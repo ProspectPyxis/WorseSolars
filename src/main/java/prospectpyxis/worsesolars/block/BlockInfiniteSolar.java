@@ -17,17 +17,18 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospectpyxis.worsesolars.ModConfig;
 import prospectpyxis.worsesolars.core.BlockTEBase;
+import prospectpyxis.worsesolars.item.ItemBlockInfiniteSolar;
 import prospectpyxis.worsesolars.item.ItemBlockWorseSolar;
 
 import javax.annotation.Nullable;
 
-public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
+public class BlockInfiniteSolar extends BlockTEBase<TileEntityInfiniteSolar> {
 
-    // 0 is inactive, 1 is active, 2 is decayed
-    public static final PropertyInteger STATUS = PropertyInteger.create("status", 0, 2);
+    // 0 is inactive, 1 is active
+    public static final PropertyInteger STATUS = PropertyInteger.create("status", 0, 1);
 
-    public BlockWorseSolar() {
-        super(Material.IRON, "worse_solar_panel");
+    public BlockInfiniteSolar() {
+        super(Material.IRON, "infinite_solar_panel");
 
         setHardness(10.0f);
         setResistance(24.0f);
@@ -39,13 +40,12 @@ public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
 
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        TileEntityWSolar tews = world.getTileEntity(pos) instanceof TileEntityWSolar ? (TileEntityWSolar)world.getTileEntity(pos) : null;
-        if (tews != null) {
-            int meta = state.getBlock().getMetaFromState(state) == 1 ? 0 : state.getBlock().getMetaFromState(state);
-            ItemStack item = new ItemStack(this, 1, meta);
+        TileEntityInfiniteSolar teis = world.getTileEntity(pos) instanceof TileEntityInfiniteSolar ? (TileEntityInfiniteSolar)world.getTileEntity(pos) : null;
+        if (teis != null) {
+            ItemStack item = new ItemStack(this, 1, 0);
             NBTTagCompound data = new NBTTagCompound();
-            tews.writeToNBT(data);
-            if (!ModConfig.blockProperties.keepEnergy) data.removeTag("energy");
+            teis.writeToNBT(data);
+            if (!ModConfig.infiniteSolars.keepEnergy) data.removeTag("energy");
             data.removeTag("x");
             data.removeTag("y");
             data.removeTag("z");
@@ -65,30 +65,6 @@ public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
     }
 
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack tool)
-    {
-        super.harvestBlock(world, player, pos, state, te, tool);
-        world.setBlockToAir(pos);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean hasComparatorInputOverride(IBlockState state) {
-        return true;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileEntityWSolar) {
-            TileEntityWSolar tews = (TileEntityWSolar)te;
-            return tews.getComparatorOutput();
-        }
-        return 0;
-    }
-
-    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, STATUS);
     }
@@ -105,44 +81,28 @@ public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this));
-
-        NBTTagCompound nbt1 = new NBTTagCompound();
-        NBTTagCompound nbt2 = new NBTTagCompound();
-        nbt1.setInteger("decayTimer", 0);
-        nbt1.setBoolean("hasDecayed", true);
-        nbt2.setTag("BlockEntityTag", nbt1);
-
-        ItemStack subitm = new ItemStack(this, 1, 2);
-        subitm.setTagCompound(nbt2);
-
-        items.add(subitm);
-    }
-
-    @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-        return new ItemStack(Item.getItemFromBlock(this), 1, world.getBlockState(pos).getValue(STATUS) == 1 ? 0 : world.getBlockState(pos).getValue(STATUS));
+        return new ItemStack(Item.getItemFromBlock(this), 1, 0);
     }
 
     @Override
     public int damageDropped(IBlockState state) {
-        return state.getValue(STATUS) == 1 ? 0 : state.getValue(STATUS);
+        return 0;
     }
 
     @Override
-    public Class<TileEntityWSolar> getTileEntityClass() {
-        return TileEntityWSolar.class;
+    public Class<TileEntityInfiniteSolar> getTileEntityClass() {
+        return TileEntityInfiniteSolar.class;
     }
 
     @Nullable
     @Override
-    public TileEntityWSolar createTileEntity(World world, IBlockState state) {
-        return new TileEntityWSolar();
+    public TileEntityInfiniteSolar createTileEntity(World world, IBlockState state) {
+        return new TileEntityInfiniteSolar();
     }
 
     @Override
     public Item createItemBlock() {
-        return new ItemBlockWorseSolar(this).setRegistryName(getRegistryName());
+        return new ItemBlockInfiniteSolar(this).setRegistryName(getRegistryName());
     }
 }

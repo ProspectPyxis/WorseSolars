@@ -6,6 +6,7 @@ import net.minecraftforge.common.config.Config;
 public class ModConfig {
 
     public static final BlockProperties blockProperties = new BlockProperties();
+    public static final InfiniteSolars infiniteSolars = new InfiniteSolars();
 
     public static class BlockProperties {
 
@@ -30,7 +31,34 @@ public class ModConfig {
         })
         public boolean panelConstantDrain = true;
 
+        @Config.Comment({ "Whether the solar panel keeps energy when broken. [default: false]" })
+        public boolean keepEnergy = false;
+
+        @Config.Comment({
+                "Disabling this will disallow the solar panel from giving a comparator output.",
+                "[default: true]"
+        })
+        public boolean canComparatorOutput = true;
+
         @Config.Comment({ "Disabling this will disallow repairing broken solar panels. [default: true]" })
         public boolean canRepair = true;
+    }
+
+    public static class InfiniteSolars {
+
+        @Config.Comment({ "Whether the infinite solar panel is enabled. [default: false]" })
+        public boolean enabled = false;
+
+        @Config.Comment({ "How much FE/t the solar panel produces. [default: 4]" })
+        public int FEperTick = 4;
+
+        @Config.Comment({ "How much FE the solar panel can contain. [default: 80000]" })
+        public int energyCapacity = 80000;
+
+        @Config.Comment({ "How much FE it can output to other blocks per tick. [default: 80]" })
+        public int transferRate = 80;
+
+        @Config.Comment({ "Whether the solar panel keeps energy when broken. [default: false]" })
+        public boolean keepEnergy = false;
     }
 }

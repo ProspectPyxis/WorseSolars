@@ -1,5 +1,6 @@
 {
 	"conditions": {
-		"enable_repairs": "prospectpyxis.worsesolars.recipe.RepairConditionFactory"
+		"enable_repairs": "prospectpyxis.worsesolars.recipe.RepairConditionFactory",
+		"infinite_enabled": "prospectpyxis.worsesolars.recipe.InfiniteConditionFactory"
 	}
 }
