@@ -37,7 +37,7 @@ public class ItemBlockWorseSolar extends ItemBlock {
             if (time >= 60) {
                 int hours = (int)Math.floor((float)time / 60f);
                 if (hours > 1) {
-                    tooltip.add(I18n.format("tooltip.worse_solar_panel.timeleft.hours"));
+                    tooltip.add(I18n.format("tooltip.worse_solar_panel.timeleft.hours", Integer.toString(hours)));
                 }
                 else {
                     tooltip.add(I18n.format("tooltip.worse_solar_panel.timeleft.onehour"));
