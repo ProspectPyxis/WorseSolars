@@ -58,9 +58,9 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
             if (world.getTileEntity(pos) instanceof TileEntityWorseSolar) {
                 if (!hasDecayed) {
                     if (canProducePower) {
-                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInfiniteSolar.STATUS, 1), 3);
+                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockWorseSolar.STATUS, 1), 3);
                     } else {
-                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInfiniteSolar.STATUS, 0), 3);
+                        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockWorseSolar.STATUS, 0), 3);
                     }
                 } else {
                     world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockWorseSolar.STATUS, 2), 3);
