@@ -21,7 +21,7 @@ public class WorseSolars {
     public static final String modid = "worsesolars";
     public static final String name = "Worse Solars";
     public static final String version = "1.12.2-1.3";
-    public static final String dependencies = "required-after:pyxislib@1.12.2-0.3";
+    public static final String dependencies = "required-after:pyxislib@1.12.2-0.3.1";
 
     @Mod.Instance(modid)
     public static WorseSolars instance;
