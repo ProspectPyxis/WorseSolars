@@ -1,6 +1,5 @@
 package prospectpyxis.worsesolars.registry;
 
-import net.minecraft.client.audio.SoundRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.IForgeRegistry;

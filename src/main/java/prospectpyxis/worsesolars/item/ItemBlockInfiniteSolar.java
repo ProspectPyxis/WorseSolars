@@ -16,7 +16,6 @@ public class ItemBlockInfiniteSolar extends ItemBlock {
 
     public ItemBlockInfiniteSolar(Block b) {
         super(b);
-        setHasSubtypes(true);
         setUnlocalizedName(b.getRegistryName().toString());
     }
 

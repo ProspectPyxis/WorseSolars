@@ -1,12 +1,11 @@
 package prospectpyxis.worsesolars.registry;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import prospectpyxis.worsesolars.ModConfig;
+import prospectpyxis.worsesolars.WorseSolars;
 import prospectpyxis.worsesolars.block.BlockInfiniteSolar;
 import prospectpyxis.worsesolars.block.BlockWorseSolar;
 
@@ -35,9 +34,9 @@ public class BlockRegisterer {
     }
 
     public static void registerModels() {
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(worsesolar), 0, new ModelResourceLocation("worsesolars:worse_solar_panel_normal"));
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(worsesolar), 2, new ModelResourceLocation("worsesolars:worse_solar_panel_decayed"));
+        WorseSolars.proxy.registerItemRenderer(Item.getItemFromBlock(worsesolar), 0, "worse_solar_panel_normal");
+        WorseSolars.proxy.registerItemRenderer(Item.getItemFromBlock(worsesolar), 2, "worse_solar_panel_decayed");
 
-        infinitesolar.registerItemModel(Item.getItemFromBlock(infinitesolar));
+        WorseSolars.proxy.registerItemRenderer(Item.getItemFromBlock(infinitesolar), 0, "infinite_solar_panel");
     }
 }

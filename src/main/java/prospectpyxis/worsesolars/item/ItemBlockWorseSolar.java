@@ -32,7 +32,7 @@ public class ItemBlockWorseSolar extends ItemBlock {
         if (stack.getMetadata() == 0) {
             tooltip.add(I18n.format("tooltip.worse_solar_panel.normal"));
             NBTTagCompound nbt = stack.getSubCompound("BlockEntityTag") == null ? new NBTTagCompound() : stack.getSubCompound("BlockEntityTag");
-            float dt = nbt.hasNoTags() ? 24000f : (float)nbt.getInteger("decayTimer");
+            float dt = nbt.hasNoTags() ? (float)ModConfig.blockProperties.panelDurability : (float)nbt.getInteger("decayTimer");
             int time = (int)Math.floor(dt / (20f * 60f));
             if (time >= 60) {
                 int hours = (int)Math.floor((float)time / 60f);

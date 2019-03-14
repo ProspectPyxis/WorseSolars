@@ -1,4 +1,4 @@
-package prospectpyxis.worsesolars.block;
+package prospectpyxis.worsesolars.block.tile;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,20 +8,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import prospectpyxis.pyxislib.energy.EnergyGenerator;
 import prospectpyxis.worsesolars.ModConfig;
-import prospectpyxis.worsesolars.core.EnergyBase;
+import prospectpyxis.worsesolars.block.BlockInfiniteSolar;
+import prospectpyxis.worsesolars.block.BlockWorseSolar;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;
 
 import javax.annotation.Nullable;
 
-public class TileEntityWSolar extends TileEntity implements ITickable {
+public class TileEntityWorseSolar extends TileEntity implements ITickable {
 
     private boolean canProducePower;
     private int decayTimer = ModConfig.blockProperties.panelDurability;
     private boolean hasDecayed = false;
     private boolean alreadyUpdated = false;
 
-    public EnergyBase eContainer = new EnergyBase(ModConfig.blockProperties.energyCapacity, ModConfig.blockProperties.transferRate);
+    public EnergyGenerator eContainer = new EnergyGenerator(ModConfig.blockProperties.energyCapacity, ModConfig.blockProperties.transferRate);
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -53,7 +55,7 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
                 }
             }
 
-            if (world.getTileEntity(pos) instanceof TileEntityWSolar) {
+            if (world.getTileEntity(pos) instanceof TileEntityWorseSolar) {
                 if (!hasDecayed) {
                     if (canProducePower) {
                         world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInfiniteSolar.STATUS, 1), 3);
@@ -73,7 +75,7 @@ public class TileEntityWSolar extends TileEntity implements ITickable {
 
             if (!hasDecayed && alreadyUpdated) {
                 if (canProducePower) {
-                    eContainer.obtainEnergy(ModConfig.blockProperties.FEpertick);
+                    eContainer.generateEnergy(ModConfig.blockProperties.FEpertick);
                     decrementDecay();
                 }
                 else if (ModConfig.blockProperties.panelConstantDrain) {

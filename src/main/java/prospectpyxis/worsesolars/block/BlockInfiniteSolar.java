@@ -9,27 +9,28 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import prospectpyxis.pyxislib.block.BlockWithTileEntity;
 import prospectpyxis.worsesolars.ModConfig;
-import prospectpyxis.worsesolars.core.BlockTEBase;
+import prospectpyxis.worsesolars.block.tile.TileEntityInfiniteSolar;
 import prospectpyxis.worsesolars.item.ItemBlockInfiniteSolar;
-import prospectpyxis.worsesolars.item.ItemBlockWorseSolar;
 
 import javax.annotation.Nullable;
 
-public class BlockInfiniteSolar extends BlockTEBase<TileEntityInfiniteSolar> {
+public class BlockInfiniteSolar extends BlockWithTileEntity<TileEntityInfiniteSolar> {
 
     // 0 is inactive, 1 is active
     public static final PropertyInteger STATUS = PropertyInteger.create("status", 0, 1);
 
     public BlockInfiniteSolar() {
-        super(Material.IRON, "infinite_solar_panel");
+        super(Material.IRON);
 
+        setUnlocalizedName("infinite_solar_panel");
+        setRegistryName("infinite_solar_panel");
         setHardness(10.0f);
         setResistance(24.0f);
 
@@ -101,7 +102,6 @@ public class BlockInfiniteSolar extends BlockTEBase<TileEntityInfiniteSolar> {
         return new TileEntityInfiniteSolar();
     }
 
-    @Override
     public Item createItemBlock() {
         return new ItemBlockInfiniteSolar(this).setRegistryName(getRegistryName());
     }

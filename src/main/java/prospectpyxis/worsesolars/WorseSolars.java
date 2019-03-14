@@ -7,41 +7,34 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.logging.log4j.Logger;
 import prospectpyxis.worsesolars.proxy.CommonProxy;
 import prospectpyxis.worsesolars.registry.BlockRegisterer;
 import prospectpyxis.worsesolars.registry.ItemRegisterer;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;
 
-@Mod(modid = WorseSolars.modid, name = WorseSolars.name, version = WorseSolars.version)
+@Mod(modid = WorseSolars.modid, name = WorseSolars.name, version = WorseSolars.version, dependencies = WorseSolars.dependencies)
 public class WorseSolars {
 
     public static final String modid = "worsesolars";
     public static final String name = "Worse Solars";
-    public static final String version = "1.2.1";
+    public static final String version = "1.3-rc1";
+    public static final String dependencies = "required-after:pyxislib@0.3";
 
     @Mod.Instance(modid)
     public static WorseSolars instance;
 
-    @SidedProxy(serverSide = "prospectpyxis.worsesolars.proxy.CommonProxy", clientSide = "prospectpyxis.worsesolars.proxy.ClientProxy")
+    public static Logger logger;
+
+    @SidedProxy(serverSide = "prospectpyxis.worsesolars.proxy.ServerProxy", clientSide = "prospectpyxis.worsesolars.proxy.ClientProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        System.out.println("Now loading " + name);
-    }
-
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-
-    }
-
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-
+        logger = event.getModLog();
+        logger.info("Now loading " + name);
     }
 
     @Mod.EventBusSubscriber

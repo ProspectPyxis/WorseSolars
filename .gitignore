@@ -1,0 +1,8 @@
+gradlew.bat
+gradlew
+WorseSolars.iml
+run/
+gradle/
+build/
+.idea/
+.gradle/

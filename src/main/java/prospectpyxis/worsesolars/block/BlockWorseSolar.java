@@ -15,20 +15,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import prospectpyxis.pyxislib.block.BlockWithTileEntity;
 import prospectpyxis.worsesolars.ModConfig;
-import prospectpyxis.worsesolars.core.BlockTEBase;
+import prospectpyxis.worsesolars.block.tile.TileEntityWorseSolar;
 import prospectpyxis.worsesolars.item.ItemBlockWorseSolar;
 
 import javax.annotation.Nullable;
 
-public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
+public class BlockWorseSolar extends BlockWithTileEntity<TileEntityWorseSolar> {
 
     // 0 is inactive, 1 is active, 2 is decayed
     public static final PropertyInteger STATUS = PropertyInteger.create("status", 0, 2);
 
     public BlockWorseSolar() {
-        super(Material.IRON, "worse_solar_panel");
+        super(Material.IRON);
 
+        setRegistryName("worse_solar_panel");
+        setUnlocalizedName("worse_solar_panel");
         setHardness(10.0f);
         setResistance(24.0f);
 
@@ -39,7 +42,7 @@ public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
 
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        TileEntityWSolar tews = world.getTileEntity(pos) instanceof TileEntityWSolar ? (TileEntityWSolar)world.getTileEntity(pos) : null;
+        TileEntityWorseSolar tews = world.getTileEntity(pos) instanceof TileEntityWorseSolar ? (TileEntityWorseSolar)world.getTileEntity(pos) : null;
         if (tews != null) {
             int meta = state.getBlock().getMetaFromState(state) == 1 ? 0 : state.getBlock().getMetaFromState(state);
             ItemStack item = new ItemStack(this, 1, meta);
@@ -81,8 +84,8 @@ public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
     @Override
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileEntityWSolar) {
-            TileEntityWSolar tews = (TileEntityWSolar)te;
+        if (te instanceof TileEntityWorseSolar) {
+            TileEntityWorseSolar tews = (TileEntityWorseSolar)te;
             return tews.getComparatorOutput();
         }
         return 0;
@@ -131,17 +134,16 @@ public class BlockWorseSolar extends BlockTEBase<TileEntityWSolar> {
     }
 
     @Override
-    public Class<TileEntityWSolar> getTileEntityClass() {
-        return TileEntityWSolar.class;
+    public Class<TileEntityWorseSolar> getTileEntityClass() {
+        return TileEntityWorseSolar.class;
     }
 
     @Nullable
     @Override
-    public TileEntityWSolar createTileEntity(World world, IBlockState state) {
-        return new TileEntityWSolar();
+    public TileEntityWorseSolar createTileEntity(World world, IBlockState state) {
+        return new TileEntityWorseSolar();
     }
 
-    @Override
     public Item createItemBlock() {
         return new ItemBlockWorseSolar(this).setRegistryName(getRegistryName());
     }
