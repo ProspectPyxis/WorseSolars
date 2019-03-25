@@ -15,7 +15,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospectpyxis.pyxislib.block.BlockWithTileEntity;
-import prospectpyxis.worsesolars.ModConfig;
+import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.tile.TileEntityInfiniteSolar;
 import prospectpyxis.worsesolars.item.ItemBlockInfiniteSolar;
 
@@ -46,7 +46,7 @@ public class BlockInfiniteSolar extends BlockWithTileEntity<TileEntityInfiniteSo
             ItemStack item = new ItemStack(this, 1, 0);
             NBTTagCompound data = new NBTTagCompound();
             teis.writeToNBT(data);
-            if (!ModConfig.infiniteSolars.keepEnergy) data.removeTag("energy");
+            if (!ModSettings.infiniteSolars.keepEnergy) data.removeTag("energy");
             data.removeTag("x");
             data.removeTag("y");
             data.removeTag("z");

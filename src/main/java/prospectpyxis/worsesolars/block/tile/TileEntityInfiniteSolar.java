@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import prospectpyxis.pyxislib.energy.EnergyGenerator;
-import prospectpyxis.worsesolars.ModConfig;
+import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.BlockInfiniteSolar;
 
 import javax.annotation.Nullable;
@@ -19,7 +19,7 @@ public class TileEntityInfiniteSolar extends TileEntity implements ITickable {
 
     private boolean canProducePower;
 
-    public EnergyGenerator eContainer = new EnergyGenerator(ModConfig.infiniteSolars.energyCapacity, ModConfig.infiniteSolars.transferRate);
+    public EnergyGenerator eContainer = new EnergyGenerator(ModSettings.infiniteSolars.energyCapacity, ModSettings.infiniteSolars.transferRate);
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -56,7 +56,7 @@ public class TileEntityInfiniteSolar extends TileEntity implements ITickable {
             }
 
             if (canProducePower) {
-                eContainer.generateEnergy(ModConfig.infiniteSolars.FEperTick);
+                eContainer.generateEnergy(ModSettings.infiniteSolars.FEperTick);
             }
         }
     }

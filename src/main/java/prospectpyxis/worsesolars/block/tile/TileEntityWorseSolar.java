@@ -9,8 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import prospectpyxis.pyxislib.energy.EnergyGenerator;
-import prospectpyxis.worsesolars.ModConfig;
-import prospectpyxis.worsesolars.block.BlockInfiniteSolar;
+import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.BlockWorseSolar;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;
 
@@ -19,11 +18,11 @@ import javax.annotation.Nullable;
 public class TileEntityWorseSolar extends TileEntity implements ITickable {
 
     private boolean canProducePower;
-    private int decayTimer = ModConfig.blockProperties.panelDurability;
+    private int decayTimer = ModSettings.blockProperties.panelDurability;
     private boolean hasDecayed = false;
     private boolean alreadyUpdated = false;
 
-    public EnergyGenerator eContainer = new EnergyGenerator(ModConfig.blockProperties.energyCapacity, ModConfig.blockProperties.transferRate);
+    public EnergyGenerator eContainer = new EnergyGenerator(ModSettings.blockProperties.energyCapacity, ModSettings.blockProperties.transferRate);
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
@@ -75,10 +74,10 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
 
             if (!hasDecayed && alreadyUpdated) {
                 if (canProducePower) {
-                    eContainer.generateEnergy(ModConfig.blockProperties.FEpertick);
+                    eContainer.generateEnergy(ModSettings.blockProperties.FEpertick);
                     decrementDecay();
                 }
-                else if (ModConfig.blockProperties.panelConstantDrain) {
+                else if (ModSettings.blockProperties.panelConstantDrain) {
                     decrementDecay();
                 }
             }
@@ -114,7 +113,7 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
     }
 
     public int getComparatorOutput() {
-        if (!ModConfig.blockProperties.canComparatorOutput) return 0;
+        if (!ModSettings.blockProperties.canComparatorOutput) return 0;
         if (hasDecayed) {
             return 0;
         }

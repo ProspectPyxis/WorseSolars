@@ -16,7 +16,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospectpyxis.pyxislib.block.BlockWithTileEntity;
-import prospectpyxis.worsesolars.ModConfig;
+import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.tile.TileEntityWorseSolar;
 import prospectpyxis.worsesolars.item.ItemBlockWorseSolar;
 
@@ -48,7 +48,7 @@ public class BlockWorseSolar extends BlockWithTileEntity<TileEntityWorseSolar> {
             ItemStack item = new ItemStack(this, 1, meta);
             NBTTagCompound data = new NBTTagCompound();
             tews.writeToNBT(data);
-            if (!ModConfig.blockProperties.keepEnergy) data.removeTag("energy");
+            if (!ModSettings.blockProperties.keepEnergy) data.removeTag("energy");
             data.removeTag("x");
             data.removeTag("y");
             data.removeTag("z");

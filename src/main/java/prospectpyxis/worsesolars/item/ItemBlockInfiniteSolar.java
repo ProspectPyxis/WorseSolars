@@ -5,9 +5,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import prospectpyxis.worsesolars.ModConfig;
 
 import javax.annotation.Nullable;
 import java.util.List;

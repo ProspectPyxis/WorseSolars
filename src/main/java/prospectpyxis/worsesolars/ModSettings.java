@@ -3,7 +3,7 @@ package prospectpyxis.worsesolars;
 import net.minecraftforge.common.config.Config;
 
 @Config(modid = WorseSolars.modid)
-public class ModConfig {
+public class ModSettings {
 
     public static final BlockProperties blockProperties = new BlockProperties();
     public static final InfiniteSolars infiniteSolars = new InfiniteSolars();

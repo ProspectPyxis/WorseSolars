@@ -3,7 +3,7 @@ package prospectpyxis.worsesolars.registry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
-import prospectpyxis.pyxislib.utils.ItemUtils;
+import prospectpyxis.pyxislib.item.ItemUtils;
 import prospectpyxis.worsesolars.WorseSolars;
 
 public class ItemRegisterer {
@@ -17,6 +17,6 @@ public class ItemRegisterer {
     }
 
     public static void registerModels() {
-        WorseSolars.proxy.registerItemRenderer(solarcell, 0, solarcell.getUnlocalizedName());
+        WorseSolars.proxy.registerItemRenderer(solarcell, 0, "solar_cell");
     }
 }

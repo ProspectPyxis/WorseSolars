@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
-import prospectpyxis.worsesolars.ModConfig;
+import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.WorseSolars;
 import prospectpyxis.worsesolars.block.BlockInfiniteSolar;
 import prospectpyxis.worsesolars.block.BlockWorseSolar;
@@ -21,7 +21,7 @@ public class BlockRegisterer {
         );
         GameRegistry.registerTileEntity(worsesolar.getTileEntityClass(), worsesolar.getRegistryName().toString());
 
-        if (ModConfig.infiniteSolars.enabled) {
+        if (ModSettings.infiniteSolars.enabled) {
             registry.register(infinitesolar);
             GameRegistry.registerTileEntity(infinitesolar.getTileEntityClass(), infinitesolar.getRegistryName().toString());
         }
@@ -30,7 +30,7 @@ public class BlockRegisterer {
     public static void registerItemBlocks(IForgeRegistry<Item> registry) {
         registry.registerAll(worsesolar.createItemBlock());
 
-        if (ModConfig.infiniteSolars.enabled) registry.register(infinitesolar.createItemBlock());
+        if (ModSettings.infiniteSolars.enabled) registry.register(infinitesolar.createItemBlock());
     }
 
     public static void registerModels() {
