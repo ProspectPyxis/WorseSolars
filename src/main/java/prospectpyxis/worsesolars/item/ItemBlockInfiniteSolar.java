@@ -21,4 +21,9 @@ public class ItemBlockInfiniteSolar extends ItemBlock {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(I18n.format("tooltip.infinite_solar_panel.normal"));
     }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        return I18n.format("tile.worse_solars.infinite_solar_panel.name");
+    }
 }

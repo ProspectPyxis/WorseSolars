@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
-import prospectpyxis.pyxislib.energy.EnergyGenerator;
+import prospectpyxis.pyxislib.capability.energy.EnergyGenerator;
 import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.BlockWorseSolar;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;

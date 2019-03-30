@@ -54,4 +54,14 @@ public class ItemBlockWorseSolar extends ItemBlock {
             }
         }
     }
+
+    @Override
+    public String getItemStackDisplayName(ItemStack stack) {
+        int meta = stack.getMetadata();
+        if (meta == 2) {
+            return I18n.format("tile.worse_solars.worse_solar_panel.decayed.name");
+        } else {
+            return I18n.format("tile.worse_solars.worse_solar_panel.name");
+        }
+    }
 }
