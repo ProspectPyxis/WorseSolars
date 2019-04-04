@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import prospectpyxis.pyxislib.capability.energy.EnergyGenerator;
 import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.BlockInfiniteSolar;
@@ -57,6 +58,15 @@ public class TileEntityInfiniteSolar extends TileEntity implements ITickable {
 
             if (canProducePower) {
                 eContainer.generateEnergy(ModSettings.infiniteSolars.FEperTick);
+            }
+
+            for (EnumFacing f : EnumFacing.values()) {
+                TileEntity te = world.getTileEntity(pos.offset(f));
+                if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, f.getOpposite())) {
+                    IEnergyStorage oCap = te.getCapability(CapabilityEnergy.ENERGY, f.getOpposite());
+                    int energySent = oCap.receiveEnergy(Math.min(eContainer.getEnergyStored(), ModSettings.infiniteSolars.transferRate), false);
+                    eContainer.extractEnergy(energySent, false);
+                }
             }
         }
     }

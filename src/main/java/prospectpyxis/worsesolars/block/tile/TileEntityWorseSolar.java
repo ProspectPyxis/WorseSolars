@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import prospectpyxis.pyxislib.capability.energy.EnergyGenerator;
 import prospectpyxis.worsesolars.ModSettings;
 import prospectpyxis.worsesolars.block.BlockWorseSolar;
@@ -21,6 +22,7 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
     private int decayTimer = ModSettings.blockProperties.panelDurability;
     private boolean hasDecayed = false;
     private boolean alreadyUpdated = false;
+    private boolean isRedstonePowered = false;
 
     public EnergyGenerator eContainer = new EnergyGenerator(ModSettings.blockProperties.energyCapacity, ModSettings.blockProperties.transferRate);
 
@@ -45,11 +47,13 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
     @Override
     public void update() {
         if (!world.isRemote) {
+            // Check if it can produce power once a second
             if (world.getTotalWorldTime() % 20 == 0) {
                 if (!alreadyUpdated) alreadyUpdated = true;
                 if (!hasDecayed) {
-                    canProducePower = (world.canBlockSeeSky(pos.up()) && world.isDaytime())
+                    if (!isRedstonePowered) canProducePower = (world.canBlockSeeSky(pos.up()) && world.isDaytime())
                             && ((!world.isRaining() && !world.isThundering()) || !world.getBiome(pos).canRain());
+                    else canProducePower = false;
                     world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
                 }
             }
@@ -73,12 +77,26 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
             }
 
             if (!hasDecayed && alreadyUpdated) {
-                if (canProducePower) {
+                if (isRedstonePowered) {
+                    if (ModSettings.blockProperties.poweredOffDecayRate != 0 && world.getTotalWorldTime() % ModSettings.blockProperties.poweredOffDecayRate == 0) {
+                        decrementDecay();
+                    }
+                }
+                else if (canProducePower) {
                     eContainer.generateEnergy(ModSettings.blockProperties.FEpertick);
                     decrementDecay();
                 }
                 else if (ModSettings.blockProperties.panelConstantDrain) {
                     decrementDecay();
+                }
+            }
+
+            for (EnumFacing f : EnumFacing.values()) {
+                TileEntity te = world.getTileEntity(pos.offset(f));
+                if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, f.getOpposite())) {
+                    IEnergyStorage oCap = te.getCapability(CapabilityEnergy.ENERGY, f.getOpposite());
+                    int energySent = oCap.receiveEnergy(Math.min(eContainer.getEnergyStored(), ModSettings.blockProperties.transferRate), false);
+                    eContainer.extractEnergy(energySent, false);
                 }
             }
         }
@@ -95,6 +113,7 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
         compound.setInteger("decayTimer", decayTimer);
         compound.setBoolean("hasDecayed", hasDecayed);
         compound.setInteger("energy", eContainer.getEnergyStored());
+        compound.setBoolean("isPowered", isRedstonePowered);
         return super.writeToNBT(compound);
     }
 
@@ -103,13 +122,16 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
         decayTimer = compound.getInteger("decayTimer");
         hasDecayed = compound.getBoolean("hasDecayed");
         eContainer.setEnergy(compound.getInteger("energy"));
+        isRedstonePowered = compound.getBoolean("isPowered") && ModSettings.blockProperties.redstoneControl;
 
         super.readFromNBT(compound);
     }
 
     public void decrementDecay() {
-        decayTimer--;
-        markDirty();
+        if (world.rand.nextFloat() <= 1f / (float)ModSettings.blockProperties.decayChance) {
+            decayTimer--;
+            markDirty();
+        }
     }
 
     public int getComparatorOutput() {
@@ -123,5 +145,21 @@ public class TileEntityWorseSolar extends TileEntity implements ITickable {
         else {
             return 1;
         }
+    }
+
+    public void updateSignal() {
+        int signal = 0;
+        for (EnumFacing f : EnumFacing.values()) {
+            signal = Math.max(signal, world.getRedstonePower(pos, f));
+        }
+        if (signal == 0) {
+            isRedstonePowered = false;
+            canProducePower = (world.canBlockSeeSky(pos.up()) && world.isDaytime())
+                    && ((!world.isRaining() && !world.isThundering()) || !world.getBiome(pos).canRain());
+        } else {
+            isRedstonePowered = true;
+            canProducePower = false;
+        }
+        world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
     }
 }

@@ -1,5 +1,6 @@
 package prospectpyxis.worsesolars.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -49,6 +51,7 @@ public class BlockWorseSolar extends BlockWithTileEntity<TileEntityWorseSolar> {
             NBTTagCompound data = new NBTTagCompound();
             tews.writeToNBT(data);
             if (!ModSettings.blockProperties.keepEnergy) data.removeTag("energy");
+            data.removeTag("isPowered");
             data.removeTag("x");
             data.removeTag("y");
             data.removeTag("z");
@@ -57,6 +60,17 @@ public class BlockWorseSolar extends BlockWithTileEntity<TileEntityWorseSolar> {
             nbt.setTag("BlockEntityTag", data);
             item.setTagCompound(nbt);
             drops.add(item);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+        if (!ModSettings.blockProperties.redstoneControl) return;
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityWorseSolar) {
+            TileEntityWorseSolar tews = (TileEntityWorseSolar)te;
+            tews.updateSignal();
         }
     }
 
@@ -121,6 +135,11 @@ public class BlockWorseSolar extends BlockWithTileEntity<TileEntityWorseSolar> {
         subitm.setTagCompound(nbt2);
 
         items.add(subitm);
+    }
+
+    @Override
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable EnumFacing side) {
+        return ModSettings.blockProperties.redstoneControl;
     }
 
     @Override

@@ -26,10 +26,27 @@ public class ModSettings {
         public int panelDurability = 24000;
 
         @Config.Comment({
+                "The chance per tick that the solar panel will lose durability. This is a \"1 out of x\" chance. [default: 1]"
+        })
+        @Config.RangeInt(min = 1)
+        public int decayChance = 1;
+
+        @Config.Comment({
                 "Whether the solar panel will lose durability all the time or only when producing power.",
                 "[default: true]"
         })
         public boolean panelConstantDrain = true;
+
+        @Config.Comment({ "If true, the solar panel can be disabled with a redstone signal. [default: false]" })
+        public boolean redstoneControl = false;
+
+        @Config.Comment({
+                "Controls how fast the solar panel decays when disabled by redstone, in ticks per durability point.",
+                "Note that this does nothing if redstoneControl is set to false.",
+                "Set to 0 to completely disable loss when redstone powered. [default: 5]"
+        })
+        @Config.RangeInt(min = 0)
+        public int poweredOffDecayRate = 5;
 
         @Config.Comment({ "Whether the solar panel keeps energy when broken. [default: false]" })
         public boolean keepEnergy = false;

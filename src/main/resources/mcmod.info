@@ -2,7 +2,7 @@
   "modid": "worsesolars",
   "name": "Worse Solars",
   "description": "Just a solar panel that breaks down after some time.",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "mcversion": "1.12.2",
   "logoFile": "assets/worsesolars/textures/logos/worsesolars_icon.png",
   "authorList": ["ProspectPyxis"],
