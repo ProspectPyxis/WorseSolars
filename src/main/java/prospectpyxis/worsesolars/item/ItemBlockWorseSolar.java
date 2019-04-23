@@ -7,6 +7,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import prospectpyxis.worsesolars.ModSettings;
 
 import javax.annotation.Nullable;
@@ -21,6 +23,7 @@ public class ItemBlockWorseSolar extends ItemBlock {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         if (stack.getMetadata() == 2) {
             tooltip.add(I18n.format("tooltip.worse_solar_panel.decayed"));
@@ -56,12 +59,12 @@ public class ItemBlockWorseSolar extends ItemBlock {
     }
 
     @Override
-    public String getItemStackDisplayName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack) {
         int meta = stack.getMetadata();
         if (meta == 2) {
-            return I18n.format("tile.worse_solars.worse_solar_panel.decayed.name");
+            return "tile.worse_solars.worse_solar_panel.decayed.name";
         } else {
-            return I18n.format("tile.worse_solars.worse_solar_panel.name");
+            return "tile.worse_solars.worse_solar_panel.name";
         }
     }
 }
