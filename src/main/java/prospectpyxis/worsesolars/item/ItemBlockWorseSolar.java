@@ -19,7 +19,7 @@ public class ItemBlockWorseSolar extends ItemBlock {
     public ItemBlockWorseSolar(Block b) {
         super(b);
         setHasSubtypes(true);
-        setUnlocalizedName(b.getRegistryName().toString());
+        // setUnlocalizedName(b.getRegistryName().toString());
     }
 
     @Override
@@ -62,9 +62,9 @@ public class ItemBlockWorseSolar extends ItemBlock {
     public String getUnlocalizedName(ItemStack stack) {
         int meta = stack.getMetadata();
         if (meta == 2) {
-            return "tile.worse_solars.worse_solar_panel.decayed.name";
+            return "tile.worse_solars.worse_solar_panel.decayed";
         } else {
-            return "tile.worse_solars.worse_solar_panel.name";
+            return "tile.worse_solars.worse_solar_panel";
         }
     }
 }

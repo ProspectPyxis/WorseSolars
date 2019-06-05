@@ -27,6 +27,6 @@ public class ItemBlockInfiniteSolar extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "tile.worse_solars.infinite_solar_panel.name";
+        return "tile.worse_solars.infinite_solar_panel";
     }
 }

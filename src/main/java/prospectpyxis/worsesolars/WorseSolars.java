@@ -20,7 +20,7 @@ public class WorseSolars {
 
     public static final String modid = "worsesolars";
     public static final String name = "Worse Solars";
-    public static final String version = "1.12.2-1.6.1";
+    public static final String version = "1.12.2-1.6.2";
     public static final String dependencies = "required-after:pyxislib@1.12.2-1.0.0";
 
     @Mod.Instance(modid)
