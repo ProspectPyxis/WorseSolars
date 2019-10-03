@@ -1,6 +1,7 @@
 {
 	"forge_marker": 1,
 	"variants": {
+		"normal": { "model": "worsesolars:worse_solar_panel_inactive" },
 		"status": {
 			"0": {
 				"model": "worsesolars:worse_solar_panel_inactive"

@@ -19,7 +19,6 @@ public class ItemBlockWorseSolar extends ItemBlock {
     public ItemBlockWorseSolar(Block b) {
         super(b);
         setHasSubtypes(true);
-        // setUnlocalizedName(b.getRegistryName().toString());
     }
 
     @Override

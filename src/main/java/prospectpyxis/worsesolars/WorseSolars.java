@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
-import prospectpyxis.worsesolars.proxy.CommonProxy;
+import prospectpyxis.worsesolars.proxy.IProxy;
 import prospectpyxis.worsesolars.registry.BlockRegisterer;
 import prospectpyxis.worsesolars.registry.ItemRegisterer;
 import prospectpyxis.worsesolars.registry.SoundRegisterer;
@@ -20,8 +20,8 @@ public class WorseSolars {
 
     public static final String modid = "worsesolars";
     public static final String name = "Worse Solars";
-    public static final String version = "1.12.2-1.6.2";
-    public static final String dependencies = "required-after:pyxislib@1.12.2-1.0.0";
+    public static final String version = "1.12.2-2.0.0";
+    public static final String dependencies = "required-after:pyxislib@1.12.2-1.3.3";
 
     @Mod.Instance(modid)
     public static WorseSolars instance;
@@ -29,12 +29,14 @@ public class WorseSolars {
     public static Logger logger;
 
     @SidedProxy(serverSide = "prospectpyxis.worsesolars.proxy.ServerProxy", clientSide = "prospectpyxis.worsesolars.proxy.ClientProxy")
-    public static CommonProxy proxy;
+    public static IProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         logger.info("Now loading " + name);
+
+        BlockRegisterer.preInit();
     }
 
     @Mod.EventBusSubscriber

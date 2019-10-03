@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import prospectpyxis.pyxislib.block.BlockWithTileEntity;
 import prospectpyxis.worsesolars.ModSettings;
+import prospectpyxis.worsesolars.WorseSolars;
 import prospectpyxis.worsesolars.block.tile.TileEntityWorseSolar;
 import prospectpyxis.worsesolars.item.ItemBlockWorseSolar;
 
@@ -33,7 +34,7 @@ public class BlockWorseSolar extends BlockWithTileEntity<TileEntityWorseSolar> {
         super(Material.IRON);
 
         setRegistryName("worse_solar_panel");
-        setUnlocalizedName("worse_solar_panel");
+        setUnlocalizedName(WorseSolars.modid + ".worse_solar_panel");
         setHardness(10.0f);
         setResistance(24.0f);
 

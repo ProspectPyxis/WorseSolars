@@ -1,4 +1,10 @@
 package prospectpyxis.worsesolars.proxy;
 
-public class ServerProxy extends CommonProxy {
+import net.minecraft.item.Item;
+
+public class ServerProxy implements IProxy {
+    @Override
+    public void registerItemRenderer(Item item, int i, String s) {
+
+    }
 }

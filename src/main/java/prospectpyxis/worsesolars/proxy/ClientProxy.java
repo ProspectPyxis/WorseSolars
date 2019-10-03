@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import prospectpyxis.worsesolars.WorseSolars;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy implements IProxy {
     @Override
     public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(WorseSolars.modid + ":" + id));
